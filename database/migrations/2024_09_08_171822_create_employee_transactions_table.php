@@ -10,11 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('bonuses', function (Blueprint $table) {
+        Schema::create('employee_transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
-            $table->decimal('amount', 8, 2); // قيمة المكافأة
-            $table->string('reason'); // سبب المكافأة
+            $table->decimal('amount', 8, 2);
+            $table->enum('type', ['bonus', 'deduction']);
+            $table->boolean('is_applied')->default(false);
+            $table->string('reason');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('bonuses');
+        Schema::dropIfExists('employee_transactions');
     }
 };

@@ -14,6 +14,11 @@ class Employee extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_employee');
+    }
+
     public function employeeJob()
     {
         return $this->belongsTo(EmployeeJob::class, 'employee_job_id', 'id');
@@ -29,14 +34,31 @@ class Employee extends Model
         return $this->hasMany(Loan::class);
     }
 
-    public function deductions()
+    public function transactions()
     {
-        return $this->hasMany(Deduction::class);
+        return $this->hasMany(EmployeeTransaction::class, 'employee_id', 'id');
     }
 
-    public function bonuses()
+    public function deductions($update = false)
     {
-        return $this->hasMany(Bonus::class);
+        $amount = $this->transactions()->where('is_applied', false)->where('type', 'deduction')->sum('amount');
+        if ($update) {
+            $this->transactions()->where('is_applied', false)->where('type', 'deduction')->update([
+                'is_applied' => true
+            ]);
+        }
+        return $amount;
+    }
+
+    public function bonuses($update = false)
+    {
+        $amount = $this->transactions()->where('is_applied', false)->where('type', 'bonus')->sum('amount');
+        if ($update) {
+            $this->transactions()->where('is_applied', false)->where('type', 'bonus')->update([
+                'is_applied' => true
+            ]);
+        }
+        return $amount;
     }
 
     public function payrolls()

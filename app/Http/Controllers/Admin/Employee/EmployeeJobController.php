@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Employee\EmployeeJobRequest;
+use App\Http\Resources\Api\Admin\Employee\EmployeeJobResource;
 use App\Models\EmployeeJob;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class EmployeeJobController extends Controller
     public function index()
     {
         $employeeJobs = EmployeeJob::query()->latest()->get();
-        return apiResponse(true, 200, $employeeJobs);
+        return apiResponse(true, 200, EmployeeJobResource::collection($employeeJobs));
     }
 
     public function store(EmployeeJobRequest $request)

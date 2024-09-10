@@ -15,6 +15,28 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Employee routes
     Route::prefix('employees')->group(function () {
+        // Loans routs
+        Route::prefix('loan')->controller(\App\Http\Controllers\Admin\Employee\LoanController::class)->group(function () {
+            Route::get('', 'index');
+            Route::post('', 'store');
+            Route::delete('{loan}', 'destroy');
+        });
+
+        // Loans routs
+        Route::prefix('transaction')->controller(\App\Http\Controllers\Admin\Employee\TransactionController::class)->group(function () {
+            Route::get('', 'index');
+            Route::get('{transaction}', 'show');
+            Route::post('', 'store');
+            Route::post('{transaction}', 'update');
+            Route::delete('{transaction}', 'destroy');
+        });
+
+        // Payroll routs
+        Route::prefix('payrolls')->controller(\App\Http\Controllers\Admin\Employee\PayrollController::class)->group(function () {
+            Route::get('', 'index');
+            Route::post('{payroll}', 'markAsPaid');
+        });
+
         // Employment status routes
         Route::get('status', [\App\Http\Controllers\Admin\Employee\EmploymentStatusController::class, 'index']);
 
@@ -35,5 +57,31 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{employee}', 'update');
             Route::delete('{employee}', 'destroy');
         });
+    });
+
+    // Project management routes
+    Route::prefix('projects')->group(function () {
+
+        // Client routes
+        Route::prefix('client')->controller(\App\Http\Controllers\Admin\Project\ClientController::class)->group(function () {
+            Route::get('', 'index');
+            Route::post('', 'create');
+            Route::get('{client}', 'show');
+            Route::post('{client}', 'update');
+            Route::delete('{client}', 'destroy');
+        });
+
+        // Projects routes
+        Route::controller(\App\Http\Controllers\Admin\Project\ProjectController::class)->group(function () {
+            Route::get('', 'index');
+            Route::get('users', 'users');
+            Route::get('employees', 'employees');
+            Route::get('', 'index');
+            Route::get('{project}', 'show');
+            Route::post('{project}', 'update');
+            Route::post('', 'create');
+            Route::delete('{project}', 'destroy');
+        });
+
     });
 });

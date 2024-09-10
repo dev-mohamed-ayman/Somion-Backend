@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('remaining_amount', 8, 2); // المبلغ المتبقي
             $table->integer('installments_count'); // عدد الأقساط الكلية
             $table->integer('installments_paid')->default(0); // عدد الأقساط المدفوعة// المبلغ المتبقي
+            $table->date('start_date');
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@ class EmployeeResource extends JsonResource
             'email' => $this->user->email,
             'username' => $this->user->username,
             'phone' => $this->user->phone,
-            'image' => $this->user->image ? asset($this->user->image) : 'https://ui-avatars.com/api/?name=' . $this->user->name,
+            'image' => $this->user->image,
             'employeeJob' => $this->employeeJob->getTranslations('title'),
             'employmentStatus' => $this->employmentStatus->getTranslations('title'),
             'employee_job_id' => $this->employee_job_id,
