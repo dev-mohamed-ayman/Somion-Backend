@@ -33,7 +33,7 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'nullable|email',
-            'phone' => 'nullable|integer',
+            'phone' => 'nullable',
             'company_name' => 'nullable|string'
         ];
     }

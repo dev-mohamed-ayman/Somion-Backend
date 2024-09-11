@@ -38,7 +38,7 @@ class ProjectCreateRequest extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
             'currency' => 'nullable|string',
-            'total_amount' => 'required|integer',
+            'total_amount' => 'required',
             'priority' => 'nullable|string|in:low,medium,high',
             'users' => 'nullable|array',
             'users.*' => 'required_with:users|exists:users,id',

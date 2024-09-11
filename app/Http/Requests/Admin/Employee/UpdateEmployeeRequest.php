@@ -44,7 +44,7 @@ class UpdateEmployeeRequest extends FormRequest
             'gender' => 'required|in:male,female',
             'address' => 'nullable|string',
             'joining_date' => 'required|date',
-            'salary' => 'required|integer',
+            'salary' => 'required',
             'payment_information' => 'required|string',
         ];
     }

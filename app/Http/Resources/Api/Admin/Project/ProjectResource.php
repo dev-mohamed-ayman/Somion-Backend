@@ -27,13 +27,14 @@ class ProjectResource extends JsonResource
             'notes' => $this->notes,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'currency' => $this->end_date,
-            'total_amount' => $this->end_date,
-            'paid_amount' => $this->end_date,
-            'remaining_amount' => $this->end_date,
-            'payment_status' => $this->end_date,
-            'project_status' => $this->end_date,
-            'priority' => $this->end_date,
+            'currency' => $this->currency,
+            'total_amount' => $this->total_amount,
+            'paid_amount' => $this->paid_amount,
+            'remaining_amount' => $this->remaining_amount,
+            'payment_status' => $this->payment_status,
+            'project_status' => $this->project_status,
+            'priority' => $this->priority,
+            'order' => $this->order,
         ];
     }
 }

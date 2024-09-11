@@ -33,7 +33,7 @@ class CreateRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'nullable|email|unique:clients,email',
-            'phone' => 'nullable|integer|unique:clients,phone',
+            'phone' => 'nullable|unique:clients,phone',
             'company_name' => 'nullable|string'
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Project;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Project\ProjectCreateRequest;
 use App\Http\Requests\Admin\Project\ProjectUpdateRequest;
+use App\Http\Requests\Admin\Project\ProjectupdateStatusAndOrderRequest;
 use App\Http\Resources\Api\Admin\Project\ProjectResource;
 use App\Models\Project;
 use App\Models\User;
@@ -15,7 +16,10 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::query()->latest()->with('users', 'employees', 'client')->paginate(limit($request->limit));
+        $projects = Project::query()
+            ->orderBy('order', 'asc')
+            ->with(['users', 'employees', 'client'])
+            ->paginate(limit($request->limit));
         return apiResponse(true, 200, [
             'projects' => ProjectResource::collection($projects),
             'pagination' => pagination($projects),
@@ -108,5 +112,20 @@ class ProjectController extends Controller
     {
         $employees = User::query()->where('type', 'employee')->select('id', 'name', 'image')->get();
         return apiResponse(true, 200, $employees);
+    }
+
+    public function updateStatusAndOrder(Request $request, Project $project)
+    {
+        if ($request->order) {
+            $project->order = $request->order;
+            $project->save();
+        }
+
+        if ($request->project_status) {
+            $project->project_status = $request->project_status;
+            $project->save();
+        }
+
+        return apiResponse(true, 200, __('words.Successfully updated'));
     }
 }

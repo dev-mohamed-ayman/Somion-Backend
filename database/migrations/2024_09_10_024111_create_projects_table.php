@@ -25,6 +25,7 @@ return new class extends Migration {
             $table->enum('payment_status', ['pending', 'partially_paid', 'paid'])->default('pending');
             $table->enum('project_status', ['not_started', 'in_progress', 'completed', 'on_hold'])->default('not_started');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }
