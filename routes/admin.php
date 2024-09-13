@@ -81,7 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{project}', 'update');
             Route::post('', 'create');
             Route::delete('{project}', 'destroy');
-            Route::post('update-status-order/{project}', 'updateStatusAndOrder');
+            Route::post('update-status-order', 'updateStatusAndOrder');
         });
 
     });

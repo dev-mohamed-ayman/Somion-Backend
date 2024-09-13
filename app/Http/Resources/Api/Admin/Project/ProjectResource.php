@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Api\Admin\Project;
 
-use App\Http\Resources\Api\Admin\Employee\EmployeeResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +20,7 @@ class ProjectResource extends JsonResource
             'description' => $this->description,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
-            'users' => $this->users,
+            'users' => UserResource::collection($this->users),
             'employees' => EmployeeResource::collection($this->employees),
             'client' => $this->client,
             'notes' => $this->notes,

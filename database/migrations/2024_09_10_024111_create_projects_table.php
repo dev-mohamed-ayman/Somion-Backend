@@ -16,14 +16,14 @@ return new class extends Migration {
             $table->string('name');
             $table->longText('description')->nullable();
             $table->longText('notes')->nullable();
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('currency')->default('USD');
-            $table->decimal('total_amount', 15, 2);
+            $table->decimal('total_amount', 15, 2)->nullable();
             $table->decimal('paid_amount', 15, 2)->default(0);
             $table->decimal('remaining_amount', 15, 2)->virtualAs('total_amount - paid_amount');
             $table->enum('payment_status', ['pending', 'partially_paid', 'paid'])->default('pending');
-            $table->enum('project_status', ['not_started', 'in_progress', 'completed', 'on_hold'])->default('not_started');
+            $table->enum('project_status', ['todo', 'inProgress', 'inReview', 'completed'])->default('todo');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->integer('order')->default(0);
             $table->timestamps();

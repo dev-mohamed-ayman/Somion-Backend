@@ -114,15 +114,12 @@ class ProjectController extends Controller
         return apiResponse(true, 200, $employees);
     }
 
-    public function updateStatusAndOrder(Request $request, Project $project)
+    public function updateStatusAndOrder(ProjectupdateStatusAndOrderRequest $request)
     {
-        if ($request->order) {
-            $project->order = $request->order;
-            $project->save();
-        }
-
-        if ($request->project_status) {
-            $project->project_status = $request->project_status;
+        foreach ($request->data as $key => $value) {
+            $project = Project::find($value['id']);
+            $project->project_status = $value['status'];
+            $project->order = $key;
             $project->save();
         }
 
