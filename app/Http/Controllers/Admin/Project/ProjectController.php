@@ -20,10 +20,7 @@ class ProjectController extends Controller
             ->orderBy('order', 'asc')
             ->with(['users', 'employees', 'client'])
             ->paginate(limit($request->limit));
-        return apiResponse(true, 200, [
-            'projects' => ProjectResource::collection($projects),
-            'pagination' => pagination($projects),
-        ]);
+        return apiResponse(true, 200, ProjectResource::collection($projects));
     }
 
     public function show(Project $project)
