@@ -12,6 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'lang' => \App\Http\Middleware\ChangeLangMiddleware::class,
+            'json' => \App\Http\Middleware\ForceJsonResponse::class,
+            'cors' => \Illuminate\Http\Middleware\HandleCors::class,
+        ]);
         $middleware->append(\App\Http\Middleware\ChangeLangMiddleware::class);
         $middleware->append(\App\Http\Middleware\CorMiddleware::class);
         $middleware->append(\App\Http\Middleware\ForceJsonResponse::class);
