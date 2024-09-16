@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\App\Http\Middleware\ChangeLangMiddleware::class);
         $middleware->append(\App\Http\Middleware\CorMiddleware::class);
         $middleware->append(\App\Http\Middleware\ForceJsonResponse::class);
+        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
