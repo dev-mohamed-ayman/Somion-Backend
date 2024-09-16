@@ -113,6 +113,7 @@ class ProjectController extends Controller
 
     public function updateStatusAndOrder(ProjectupdateStatusAndOrderRequest $request)
     {
+//        return 123;
         foreach ($request->data as $key => $value) {
             $project = Project::find($value['id']);
             $project->project_status = $value['status'];

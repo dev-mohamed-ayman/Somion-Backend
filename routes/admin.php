@@ -77,11 +77,20 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('users', 'users');
             Route::get('employees', 'employees');
             Route::get('', 'index');
+            Route::post('update-status-order', 'updateStatusAndOrder');
             Route::get('{project}', 'show');
             Route::post('{project}', 'update');
             Route::post('', 'create');
             Route::delete('{project}', 'destroy');
-            Route::post('update-status-order', 'updateStatusAndOrder');
+        });
+
+        // Section routes
+        Route::prefix('section')->controller(\App\Http\Controllers\Admin\Project\SectionController::class)->group(function () {
+            Route::get('{project}', 'index');
+            Route::post('create', 'create');
+            Route::post('update', 'update');
+            Route::delete('{section}', 'destroy');
+            Route::post('order', 'order');
         });
 
     });

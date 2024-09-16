@@ -20,4 +20,5 @@ return [
     'Successfully created' => 'Successfully created',
     'Successfully updated' => 'Successfully updated',
     'Successfully deleted' => 'Successfully deleted',
+    'Section not found' => 'Section not found',
 ];
