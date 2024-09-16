@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', [\App\Http\Controllers\Admin\Auth\AuthController::class, 'login'])->middleware('guest');
 
 // Auth routes
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', \App\Http\Middleware\CorMiddleware::class])->group(function () {
     // Profile
     Route::get('auth/profile', [\App\Http\Controllers\Admin\Auth\AuthController::class, 'profile']);
     // Logout
