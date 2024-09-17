@@ -86,6 +86,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Section routes
         Route::prefix('section')->controller(\App\Http\Controllers\Admin\Project\SectionController::class)->group(function () {
+            Route::get('{project}/dropdown', 'dropdown');
             Route::get('{project}', 'index');
             Route::post('create', 'create');
             Route::post('update', 'update');

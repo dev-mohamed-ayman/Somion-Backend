@@ -21,4 +21,5 @@ return [
     'Successfully updated' => 'Successfully updated',
     'Successfully deleted' => 'Successfully deleted',
     'Section not found' => 'Section not found',
+    'Task not found' => 'Task not found',
 ];

@@ -74,6 +74,17 @@ class SectionController extends Controller
 
     }
 
+    public function dropdown($id)
+    {
+        $sections = Section::query()
+            ->where('project_id', $id)
+            ->orderBy('order', 'asc')
+            ->select('id', 'title')
+            ->get();
+
+        return apiResponse(true, 200, $sections);
+    }
+
     public function destroy(Section $section)
     {
         $section->delete();
