@@ -17,7 +17,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $projects = Project::query()
-            ->orderBy('order', 'asc')
+            ->orderBy('order', 'desc')
             ->with(['users', 'employees', 'client'])
             ->paginate(limit($request->limit));
         return apiResponse(true, 200, ProjectResource::collection($projects));
@@ -111,16 +111,26 @@ class ProjectController extends Controller
         return apiResponse(true, 200, $employees);
     }
 
-    public function updateStatusAndOrder(ProjectupdateStatusAndOrderRequest $request)
+    public function updateStatusAndOrder(Request $request)
     {
-//        return 123;
-        foreach ($request->data as $key => $value) {
-            $project = Project::find($value['id']);
-            $project->project_status = $value['status'];
-            $project->order = $key;
-            $project->save();
-        }
+        DB::beginTransaction();
 
-        return apiResponse(true, 200, __('words.Successfully updated'));
+        try {
+            foreach ($request->data as $status => $projects) {
+                foreach ($projects as $order => $project) {
+                    Project::where('id', $project['id'])
+                        ->update([
+                            'project_status' => $status,
+                            'order' => $project['order']
+                        ]);
+                }
+            }
+
+            DB::commit();
+            return apiResponse(true, 200, __('words.Successfully updated'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return apiResponse(false, 500, __('words error occurred'), null, $e->getMessage());
+        }
     }
 }
