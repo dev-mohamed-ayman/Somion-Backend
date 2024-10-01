@@ -15,7 +15,6 @@ class TaskController extends Controller
 
     public function index($section_id)
     {
-        return 123;
         $tasks = Task::query()->where('section_id', $section_id)->orderBy('order', 'asc')->get();
         return apiResponse(true, 200, $tasks);
     }

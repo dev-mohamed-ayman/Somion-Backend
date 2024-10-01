@@ -98,8 +98,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::controller(\App\Http\Controllers\Admin\Project\Task\TaskController::class)->group(function () {
                 Route::get('{section_id}', 'index');
                 Route::get('show/{task_id}', 'show');
-                Route::post('create', 'create');
-                Route::put('update', 'update');
+                Route::post('', 'create');
+                Route::put('', 'update');
                 Route::delete('{task}', 'delete');
             });
         });
