@@ -29,6 +29,7 @@ class TaskController extends Controller
 
     public function create(Request $request)
     {
+        return 123;
         $validator = Validator::make($request->all(), [
             'section_id' => 'required|exists:sections,id',
             'title' => 'required|string'
