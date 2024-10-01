@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -92,6 +91,17 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('update', 'update');
             Route::delete('{section}', 'destroy');
             Route::post('order', 'order');
+        });
+
+        // task routes
+        Route::prefix('task')->group(function () {
+            Route::controller(\App\Http\Controllers\Admin\Project\Task\TaskController::class)->group(function () {
+                Route::get('{section_id}', 'index');
+                Route::get('show/{task_id}', 'show');
+                Route::post('', 'create');
+                Route::put('', 'update');
+                Route::delete('{task}', 'delete');
+            });
         });
 
     });

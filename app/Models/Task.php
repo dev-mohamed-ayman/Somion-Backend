@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+
+    public function sections()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(TaskComment::class);
+    }
 }
