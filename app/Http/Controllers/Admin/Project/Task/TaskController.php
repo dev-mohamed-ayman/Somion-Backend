@@ -15,6 +15,7 @@ class TaskController extends Controller
 
     public function index($section_id)
     {
+        return 123;
         $tasks = Task::query()->where('section_id', $section_id)->orderBy('order', 'asc')->get();
         return apiResponse(true, 200, $tasks);
     }
@@ -29,7 +30,6 @@ class TaskController extends Controller
 
     public function create(Request $request)
     {
-        return 123;
         $validator = Validator::make($request->all(), [
             'section_id' => 'required|exists:sections,id',
             'title' => 'required|string'
