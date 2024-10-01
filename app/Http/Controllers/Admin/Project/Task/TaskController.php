@@ -37,6 +37,8 @@ class TaskController extends Controller
             return apiResponse(false, 422, $validator->messages()->all());
         }
 
+        return $request;
+
         $task = new Task();
         $task->section_id = $request->section_id;
         $task->title = $request->title;
