@@ -15,7 +15,12 @@ class TaskController extends Controller
 
     public function index($section_id)
     {
-        $tasks = Task::query()->where('section_id', $section_id)->orderBy('order', 'asc')->get();
+        $tasks = Task::query()
+            ->where('section_id', $section_id)
+            ->select('id', 'title', 'end_date')
+            ->withCount('comments')
+            ->orderBy('order', 'asc')
+            ->get();
         return apiResponse(true, 200, $tasks);
     }
 
@@ -36,8 +41,6 @@ class TaskController extends Controller
         if ($validator->fails()) {
             return apiResponse(false, 422, $validator->messages()->all());
         }
-
-        return $request;
 
         $task = new Task();
         $task->section_id = $request->section_id;
@@ -79,8 +82,12 @@ class TaskController extends Controller
 
     public function delete(Task $task)
     {
+        foreach ($task->comments as $comment) {
+            foreach ($comment->files as $file) {
+                deleteFile($file->path);
+            }
+        }
         $task->delete();
-
         return apiResponse(true, 200, __('words.Successfully deleted'));
     }
 }

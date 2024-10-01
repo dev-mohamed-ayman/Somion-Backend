@@ -22,4 +22,7 @@ return [
     'Successfully deleted' => 'Successfully deleted',
     'Section not found' => 'Section not found',
     'Task not found' => 'Task not found',
+    'No comment or file provided' => 'No comment or file provided',
+    'Comment not found' => 'Comment not found',
+    'Unauthorized to update this comment' => 'Unauthorized to update this comment',
 ];

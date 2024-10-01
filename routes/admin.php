@@ -89,7 +89,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('{project}', 'index');
             Route::post('create', 'create');
             Route::post('update', 'update');
-            Route::delete('{section}', 'destroy');
+            Route::delete('{task}', 'destroy');
             Route::post('order', 'order');
         });
 
@@ -99,8 +99,16 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::get('{section_id}', 'index');
                 Route::get('show/{task_id}', 'show');
                 Route::post('create', 'create');
-                Route::put('update', 'update');
+                Route::post('update', 'update');
                 Route::delete('{task}', 'delete');
+            });
+
+            // Comment routes
+            Route::prefix('comment')->controller(\App\Http\Controllers\Admin\Project\Task\CommentController::class)->group(function () {
+                Route::post('', 'create');
+                Route::post('{taskComment}', 'update');
+                Route::delete('file/{taskCommentFile}', 'deleteFile');
+                Route::get('file/{taskCommentFile}', 'downloadFile');
             });
         });
 
