@@ -86,8 +86,11 @@ class SectionController extends Controller
         return apiResponse(true, 200, $sections);
     }
 
-    public function destroy(Section $section)
+    public function destroy($id)
     {
+        $section = Section::query()->findOr($id, function () {
+            return apiResponse(true, 404, __('words.Section not found'));
+        });
         $section->delete();
 
         return apiResponse(true, 200, __('words.Successfully deleted'));
