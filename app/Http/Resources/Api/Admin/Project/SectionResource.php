@@ -18,7 +18,13 @@ class SectionResource extends JsonResource
             'name' => $this->name,
             'users' => UserResource::collection($this->users),
             'employees' => EmployeeResource::collection($this->employees),
-            'sections' => $this->sections()->orderBy('order', 'asc')->with('tasks:id,title,section_id')->select('id', 'title')->get(),
+            'sections' => $this->sections()
+                ->orderBy('order', 'asc')
+                ->with(['tasks' => function ($tasks) {
+                    $tasks->orderBy('order', 'asc')->select('id','title','section_id');
+                }])
+                ->select('id', 'title')
+                ->get(),
         ];
     }
 }
