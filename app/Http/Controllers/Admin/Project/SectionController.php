@@ -58,15 +58,16 @@ class SectionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'data' => 'required|array',
-            'data.*' => 'required_with:data|exists:sections,id',
+            'data.*.id' => 'required|exists:sections,id',
+            'data.*.order' => 'required|integer|min:0',
         ]);
         if ($validator->fails()) {
             return apiResponse(false, 422, $validator->messages()->all());
         }
 
-        foreach ($request->data as $key => $value) {
-            $section = Section::find($value);
-            $section->order = $key;
+        foreach ($request->data as $item) {
+            $section = Section::find($item['id']);
+            $section->order = $item['order'];
             $section->save();
         }
 
