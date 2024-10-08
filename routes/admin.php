@@ -12,8 +12,45 @@ Route::middleware('auth:sanctum')->group(function () {
     // Logout
     Route::post('auth/logout', [\App\Http\Controllers\Admin\Auth\AuthController::class, 'logout']);
 
+    // User routes
+    Route::prefix('user')->controller(\App\Http\Controllers\Admin\UserController::class)->group(function () {
+        Route::get('', 'index');
+        Route::get('{user}', 'show');
+        Route::post('', 'create');
+        Route::post('update', 'update');
+        Route::delete('{user}', 'destroy');
+    });
+
+    // Role routes
+    Route::prefix('role')->controller(\App\Http\Controllers\Admin\RoleController::class)->group(function () {
+        Route::get('', 'index');
+        Route::get('permissions', 'permissions');
+        Route::get('{role}', 'show');
+        Route::post('', 'create');
+        Route::post('{role}', 'update');
+        Route::delete('{role}', 'destroy');
+    });
+
     // Employee routes
     Route::prefix('employees')->group(function () {
+
+        // Attendance routes
+        Route::prefix('attendance')->controller(\App\Http\Controllers\Admin\employee\AttendanceController::class)->group(function () {
+            Route::get('', 'index');
+            Route::get('all', 'all');
+            Route::get('check-in', 'checkIn');
+            Route::get('check-out', 'checkOut');
+        });
+
+        Route::prefix('leave-requests')->controller(\App\Http\Controllers\Admin\employee\LeaveRequestController::class)->group(function () {
+            Route::get('', 'index');
+            Route::get('all', 'all');
+            Route::post('change-status', 'changeStatus');
+            Route::post('', 'store');
+            Route::post('{LeaveRequest}', 'update');
+            Route::delete('{LeaveRequest}', 'destroy');
+        });
+
         // Loans routs
         Route::prefix('loan')->controller(\App\Http\Controllers\Admin\Employee\LoanController::class)->group(function () {
             Route::get('', 'index');
@@ -97,7 +134,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('task')->group(function () {
             Route::controller(\App\Http\Controllers\Admin\Project\Task\TaskController::class)->group(function () {
                 Route::get('{section_id}', 'index');
+                Route::get('employees/{project}', 'employees');
                 Route::get('show/{task_id}', 'show');
+                Route::post('order', 'order');
                 Route::post('create', 'create');
                 Route::post('update', 'update');
                 Route::delete('{task}', 'delete');
@@ -109,6 +148,14 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::post('{taskComment}', 'update');
                 Route::delete('file/{taskCommentFile}', 'deleteFile');
                 Route::get('file/{taskCommentFile}', 'downloadFile');
+            });
+
+            // Checklist routes
+            Route::prefix('checklist')->controller(\App\Http\Controllers\Admin\Project\Task\ChecklistController::class)->group(function () {
+                Route::post('', 'create');
+                Route::post('{taskChecklist}', 'update');
+                Route::post('complete/{taskChecklist}', 'complete');
+                Route::delete('{taskChecklist}', 'destroy');
             });
         });
 

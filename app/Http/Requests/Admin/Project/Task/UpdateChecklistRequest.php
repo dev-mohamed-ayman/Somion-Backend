@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UpdateCommentRequest extends FormRequest
+class UpdateChecklistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,9 +31,7 @@ class UpdateCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'comment' => 'required|string',
-            'attachments' => 'nullable|array',
-            'attachments.*' => 'required_with:attachments|file',
+            'text' => 'required|string'
         ];
     }
 }

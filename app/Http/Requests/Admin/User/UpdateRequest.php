@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Project\Task;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UpdateCommentRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,9 +31,16 @@ class UpdateCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'comment' => 'required|string',
-            'attachments' => 'nullable|array',
-            'attachments.*' => 'required_with:attachments|file',
+            'id' => 'required|exists:users,id',
+            'name' => 'required|string|min:2',
+            'phone' => 'nullable|unique:users,phone,' . $this->id,
+            'username' => 'required|string|unique:users,username,' . $this->id,
+            'email' => 'required|email|unique:users,email,' . $this->id,
+            'status' => 'required|string|in:active,inactive',
+            'image' => 'nullable|file',
+            'roles' => 'required|array',
+            'roles.*' => 'required_with:roles|exists:roles,name',
+            'password' => 'nullable|string|confirmed',
         ];
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Project;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UpdateTaskRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,14 +31,15 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'task_id' => 'required|exists:tasks,id',
-            'section_id' => 'nullable|exists:sections,id',
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'start_date' => 'nullable|date|string',
-            'end_date' => 'nullable|date|string',
-            'employees' => 'nullable|array',
-            'employees.*' => 'required_with:employees|exists:employees,id',
+            'name' => 'required|string|min:2',
+            'phone' => 'nullable|unique:users,phone',
+            'username' => 'required|string|unique:users,username',
+            'email' => 'required|email|unique:users,email',
+            'status' => 'required|string|in:active,inactive',
+            'image' => 'nullable|file',
+            'roles' => 'required|array',
+            'roles.*' => 'required_with:roles|exists:roles,name',
+            'password' => 'required|string|confirmed',
         ];
     }
 }

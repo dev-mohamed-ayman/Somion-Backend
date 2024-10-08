@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Section extends Model
+class LeaveRequest extends Model
 {
     use HasFactory;
 
-    public function tasks()
+    protected $guarded = [];
+
+    public function employee()
     {
-        return $this->hasMany(Task::class);
+        return $this->belongsTo(Employee::class);
     }
 }

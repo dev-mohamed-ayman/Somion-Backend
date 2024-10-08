@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,13 @@ class AuthController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return apiResponse(true, 200, $user);
+        $permissions = Permission::query()->whereHas('roles', function ($q) use ($user) {
+            $q->whereIn('id', $user->roles()->pluck('id'));
+        })->select('id', 'name')->get();
+        return apiResponse(true, 200, [
+            'user' => $user,
+            'permissions' => $permissions,
+        ]);
     }
 
     public function logout()

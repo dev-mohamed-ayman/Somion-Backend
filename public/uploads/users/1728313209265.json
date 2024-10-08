@@ -1,0 +1,42 @@
+{
+    "resources": [
+        {
+            "_id": "req_admin",
+            "_type": "request_group",
+            "name": "Admin",
+            "requests": [
+                {
+                    "_id": "req_auth",
+                    "_type": "request",
+                    "name": "Auth",
+                    "method": "GET",
+                    "url": "",
+                    "headers": [],
+                    "body": {}
+                },
+                {
+                    "_id": "req_employee",
+                    "_type": "request",
+                    "name": "Employee",
+                    "method": "GET",
+                    "url": "",
+                    "headers": [],
+                    "body": {}
+                },
+                {
+                    "_id": "req_projects management",
+                    "_type": "request",
+                    "name": "Projects Management",
+                    "method": "GET",
+                    "url": "",
+                    "headers": [],
+                    "body": {}
+                }
+            ]
+        }
+    ],
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2024-10-01T00:00:00.000Z",
+    "__export_source": "insomnia.desktop.app:v2024.4.0"
+}

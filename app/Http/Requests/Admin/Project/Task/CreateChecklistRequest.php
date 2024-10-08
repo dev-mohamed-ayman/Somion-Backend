@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UpdateCommentRequest extends FormRequest
+class CreateChecklistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,11 +17,11 @@ class UpdateCommentRequest extends FormRequest
     }
 
     public function failedValidation(Validator $validator)
-        {
-            $response = apiResponse(false, 422, $validator->messages()->all());
+    {
+        $response = apiResponse(false, 422, $validator->messages()->all());
 
-            throw new ValidationException($validator, $response);
-        }
+        throw new ValidationException($validator, $response);
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -31,9 +31,8 @@ class UpdateCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'comment' => 'required|string',
-            'attachments' => 'nullable|array',
-            'attachments.*' => 'required_with:attachments|file',
+            'task_id' => 'required|exists:tasks,id',
+            'text' => 'required|string',
         ];
     }
 }

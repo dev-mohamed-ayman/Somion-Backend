@@ -14,9 +14,24 @@ class Employee extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function leaveRequests()
+    {
+        return $this->hasMany(LeaveRequest::class);
+    }
+
     public function projects()
     {
         return $this->belongsToMany(Project::class, 'project_employee');
+    }
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'task_employee');
     }
 
     public function employeeJob()

@@ -32,6 +32,7 @@ class CommentController extends Controller
                     $commentFile = new TaskCommentFile();
                     $commentFile->task_comment_id = $comment->id;
                     $commentFile->path = uploadFile('comments', $file);
+                    $commentFile->name = $file->getClientOriginalName();
                     $commentFile->save();
                 }
             }
@@ -47,15 +48,31 @@ class CommentController extends Controller
 
     public function update(UpdateCommentRequest $request, TaskComment $taskComment)
     {
+        DB::beginTransaction();
+        try {
+            if ($taskComment->user_id !== auth()->id()) {
+                return apiResponse(false, 403, __('words.Unauthorized to update this comment'));
+            }
 
-        if ($taskComment->user_id !== auth()->id()) {
-            return apiResponse(false, 403, __('words.Unauthorized to update this comment'));
+            $taskComment->comment = $request->input('comment');
+            $taskComment->save();
+
+            if ($request->attachments) {
+                foreach ($request->attachments as $file) {
+                    $commentFile = new TaskCommentFile();
+                    $commentFile->task_comment_id = $taskComment->id;
+                    $commentFile->path = uploadFile('comments', $file);
+                    $commentFile->name = $file->getClientOriginalName();
+                    $commentFile->save();
+                }
+            }
+
+            DB::commit();
+            return apiResponse(true, 200, __('words.Successfully updated'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return apiResponse(false, 500, $e->getMessage());
         }
-
-        $taskComment->comment = $request->input('comment');
-        $taskComment->save();
-
-        return apiResponse(true, 200, __('words.Successfully updated'));
     }
 
     public function deleteFile(TaskCommentFile $taskCommentFile)

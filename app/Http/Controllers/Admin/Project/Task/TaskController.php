@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin\Project\Task;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Project\Task\TaskOrderRequest;
 use App\Http\Requests\Admin\Project\UpdateTaskRequest;
 use App\Http\Resources\Api\Admin\Project\Task\TaskResource;
+use App\Http\Resources\Api\Admin\Project\Task\TasksResource;
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +20,9 @@ class TaskController extends Controller
     {
         $tasks = Task::query()
             ->where('section_id', $section_id)
-            ->select('id', 'title', 'end_date')
-            ->withCount('comments')
             ->orderBy('order', 'asc')
             ->get();
-        return apiResponse(true, 200, $tasks);
+        return apiResponse(true, 200, TasksResource::collection($tasks));
     }
 
     public function show($task_id)
@@ -30,6 +31,22 @@ class TaskController extends Controller
             return apiResponse(false, 404, __('words.Task not found'));
         });
         return apiResponse(true, 200, new TaskResource($task));
+    }
+
+    public function employees($project_id)
+    {
+        $project = Project::query()->findOr($project_id, function () {
+            return apiResponse(false, 404, __('words.Project not found'));
+        });
+        $employees = $project->employees()->with('user')->latest()->get()->map(function ($employee) {
+            return [
+                'id' => $employee->id,
+                'name' => $employee->user->name,
+                'image' => $employee->user->image
+            ];
+        });
+
+        return apiResponse(true, 200, $employees);
     }
 
     public function create(Request $request)
@@ -71,6 +88,10 @@ class TaskController extends Controller
                 $task->end_date = $request->end_date;
             $task->save();
 
+            if ($request->employees) {
+                $task->employees()->sync($request->employees);
+            }
+
 
             DB::commit();
             return apiResponse(true, 200, __('words.Successfully updated'));
@@ -78,6 +99,20 @@ class TaskController extends Controller
             DB::rollBack();
             return apiResponse(false, 500, $e->getMessage());
         }
+    }
+
+    public function order(Request $request)
+    {
+        foreach ($request->data as $section => $tasks) {
+            foreach ($tasks as $order => $task) {
+                Task::query()->where('id', $task)->update([
+                    'order' => $order,
+                    'section_id' => $section,
+                ]);
+            }
+        }
+
+        return apiResponse(true, 200, __('words.Successfully updated'));
     }
 
     public function delete(Task $task)

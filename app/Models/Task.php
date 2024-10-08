@@ -18,4 +18,14 @@ class Task extends Model
     {
         return $this->hasMany(TaskComment::class);
     }
+
+    public function checklists()
+    {
+        return $this->hasMany(TaskChecklist::class);
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class, 'task_employee');
+    }
 }

@@ -10,11 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('task_comment_files', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('task_comment_id')->constrained()->cascadeOnDelete();
-            $table->string('path');
-            $table->text('name')->nullable();
+            $table->foreignId('employee_id')->constrained();
+            $table->date('date');
+            $table->time('check_in')->nullable();
+            $table->time('check_out')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('task_comment_files');
+        Schema::dropIfExists('attendances');
     }
 };

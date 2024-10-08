@@ -34,7 +34,7 @@ class CreateCommentRequest extends FormRequest
             'task_id' => 'required|exists:tasks,id',
             'comment' => 'nullable|string',
             'attachments' => 'nullable|array',
-            'attachments.*' => 'nullable|file',
+            'attachments.*' => 'required_with:attachments|file',
         ];
     }
 }

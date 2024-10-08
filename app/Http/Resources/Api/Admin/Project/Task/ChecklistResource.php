@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api\Admin\Project\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentResource extends JsonResource
+class ChecklistResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,8 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'comment' => $this->comment,
-            'name' => $this->user->name,
-            'image' => $this->user->image,
-            'files' => $this->files()->select('id', 'path', 'name')->get(),
-            'created' => $this->created_at,
+            'text' => $this->text,
+            'completed' => $this->completed
         ];
     }
 }
