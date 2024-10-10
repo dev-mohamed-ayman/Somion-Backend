@@ -53,7 +53,7 @@ class TaskController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'section_id' => 'required|exists:sections,id',
-            'title' => 'required|string'
+            'title' => 'required|string',
         ]);
         if ($validator->fails()) {
             return apiResponse(false, 422, $validator->messages()->all());
@@ -62,6 +62,7 @@ class TaskController extends Controller
         $task = new Task();
         $task->section_id = $request->section_id;
         $task->title = $request->title;
+        $task->bg_color = $request->bg_color;
         $task->save();
 
         return apiResponse(true, 200, __('words.Successfully created'));
