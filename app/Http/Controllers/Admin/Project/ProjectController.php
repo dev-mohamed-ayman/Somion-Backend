@@ -40,6 +40,8 @@ class ProjectController extends Controller
             $project->client_id = $request->client_id;
             $project->start_date = $request->start_date;
             $project->end_date = $request->end_date;
+            $project->bg_image = $request->bg_image;
+            $project->bg_color = $request->bg_color;
             if ($request->currency)
                 $project->currency = $request->currency;
             $project->total_amount = $request->total_amount;
@@ -72,6 +74,8 @@ class ProjectController extends Controller
             $project->client_id = $request->client_id;
             $project->start_date = $request->start_date;
             $project->end_date = $request->end_date;
+            $project->bg_image = $request->bg_image;
+            $project->bg_color = $request->bg_color;
             if ($request->currency)
                 $project->currency = $request->currency;
             $project->total_amount = $request->total_amount;
@@ -95,6 +99,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        deleteFile($project->bg_image);
         $project->delete();
         return apiResponse(true, 200, __('words.Successfully deleted'));
     }

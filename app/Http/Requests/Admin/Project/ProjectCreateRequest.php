@@ -44,6 +44,8 @@ class ProjectCreateRequest extends FormRequest
             'users.*' => 'required_with:users|exists:users,id',
             'employees' => 'nullable|array',
             'employees.*' => 'required_with:employees|exists:employees,id',
+            'bg_image' => 'nullable|file',
+            'bg_color' => 'nullable|string',
         ];
     }
 }

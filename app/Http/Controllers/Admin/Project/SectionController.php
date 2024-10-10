@@ -20,7 +20,8 @@ class SectionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_id' => 'required|exists:projects,id',
-            'title' => 'required|string'
+            'title' => 'required|string',
+            'bg_color' => 'nullable|string'
         ]);
         if ($validator->fails()) {
             return apiResponse(false, 422, $validator->messages()->all());
@@ -29,6 +30,7 @@ class SectionController extends Controller
         $section = new Section();
         $section->project_id = $request->project_id;
         $section->title = $request->title;
+        $section->bg_color = $request->bg_color;
         $section->save();
 
         return apiResponse(true, 201, __('words.Successfully created'));
@@ -38,7 +40,8 @@ class SectionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'section_id' => 'required|exists:sections,id',
-            'title' => 'required|string'
+            'title' => 'required|string',
+            'bg_color' => 'nullable|string'
         ]);
         if ($validator->fails()) {
             return apiResponse(false, 422, $validator->messages()->all());
@@ -49,6 +52,7 @@ class SectionController extends Controller
         });
 
         $section->title = $request->title;
+        $section->bg_color = $request->bg_color;
         $section->save();
 
         return apiResponse(true, 200, __('words.Successfully updated'));

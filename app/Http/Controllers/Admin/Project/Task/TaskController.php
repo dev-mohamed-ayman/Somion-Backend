@@ -76,16 +76,12 @@ class TaskController extends Controller
                 return apiResponse(false, 404, __('words.Task not found'));
             });
 
-            if ($request->section_id)
-                $task->section_id = $request->section_id;
-            if ($request->title)
-                $task->title = $request->title;
-            if ($request->description)
-                $task->description = $request->description;
-            if ($request->start_date)
-                $task->start_date = $request->start_date;
-            if ($request->end_date)
-                $task->end_date = $request->end_date;
+            $task->section_id = $request->section_id;
+            $task->title = $request->title;
+            $task->description = $request->description;
+            $task->start_date = $request->start_date;
+            $task->end_date = $request->end_date;
+            $task->bg_color = $request->bg_color;
             $task->save();
 
             if ($request->employees) {

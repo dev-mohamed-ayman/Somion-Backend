@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Project;
+namespace App\Http\Requests\Admin\Website;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UpdateTaskRequest extends FormRequest
+class HeroRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,15 +31,15 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'task_id' => 'required|exists:tasks,id',
-            'section_id' => 'nullable|exists:sections,id',
-            'title' => 'nullable|string',
-            'description' => 'nullable|string',
-            'start_date' => 'nullable|date|string',
-            'end_date' => 'nullable|date|string',
-            'employees' => 'nullable|array',
-            'employees.*' => 'required_with:employees|exists:employees,id',
-            'bg_color' => 'nullable|string',
+            'title' => 'required|string',
+            'short_description' => 'required|string',
+            'btn_title' => 'required|string',
+            'items' => 'nullable|array',
+            'items.*' => 'required_with:items|array',
+            'items.*.id' => 'required_with:items.*|exists:hero_items,id',
+            'items.*.icon' => 'required_with:items.*|file',
+            'items.*.number' => 'required_with:items.*|string',
+            'items.*.title' => 'required_with:items.*|title',
         ];
     }
 }

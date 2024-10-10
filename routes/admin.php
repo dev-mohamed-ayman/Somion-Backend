@@ -160,4 +160,10 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
     });
+
+    Route::prefix('website')->group(function () {
+        // Hero routes
+        Route::get('hero', [\App\Http\Controllers\Admin\Website\HeroController::class, 'index']);
+        Route::post('hero', [\App\Http\Controllers\Admin\Website\HeroController::class, 'update']);
+    });
 });
