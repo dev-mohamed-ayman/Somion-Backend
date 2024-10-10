@@ -16,6 +16,8 @@ class SectionResource extends JsonResource
     {
         return [
             'name' => $this->name,
+            'bg_color' => $this->bg_color,
+            'bg_image' => $this->bg_image,
             'users' => UserResource::collection($this->users),
             'employees' => EmployeeResource::collection($this->employees),
             'sections' => $this->sections()
