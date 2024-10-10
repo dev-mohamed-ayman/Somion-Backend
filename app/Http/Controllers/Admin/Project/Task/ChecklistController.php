@@ -22,6 +22,7 @@ class ChecklistController extends Controller
     public function update(TaskChecklist $taskChecklist, UpdateChecklistRequest $request)
     {
         $taskChecklist->text = $request->text;
+        $taskChecklist->completed = $request->completed;
         $taskChecklist->save();
         return apiResponse(true, 200, __('words.Successfully updated'));
     }
