@@ -23,7 +23,7 @@ class SectionResource extends JsonResource
                 ->with(['tasks' => function ($tasks) {
                     $tasks->orderBy('order', 'asc')->select('id','title','section_id');
                 }])
-                ->select('id', 'title')
+                ->select('id', 'title', 'bg_color')
                 ->get(),
         ];
     }

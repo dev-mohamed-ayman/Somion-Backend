@@ -18,9 +18,18 @@ return new class extends Migration {
             $table->timestamps();
         });
         \Illuminate\Support\Facades\DB::table('heroes')->insert([
-            'title' => 'Hero Title',
-            'short_description' => 'Short Description',
-            'btn_title' => 'Button Title'
+            'title' => [
+                'en' => 'Hero Title',
+                'de' => 'Hero Title',
+            ],
+            'short_description' => [
+                'en' => 'Short Description',
+                'de' => 'Short Description',
+            ],
+            'btn_title' => [
+                'en' => 'Button Title',
+                'de' => 'Button Title',
+            ]
         ]);
     }
 

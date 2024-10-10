@@ -34,6 +34,8 @@ class ProjectResource extends JsonResource
             'project_status' => $this->project_status,
             'priority' => $this->priority,
             'order' => $this->order,
+            'bg_image' => $this->bg_image,
+            'bg_color' => $this->bg_color,
         ];
     }
 }

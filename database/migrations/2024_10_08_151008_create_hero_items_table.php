@@ -12,36 +12,45 @@ return new class extends Migration {
     {
         Schema::create('hero_items', function (Blueprint $table) {
             $table->id();
-            $table->json('icon');
             $table->string('number');
             $table->json('title')->unique();
             $table->timestamps();
         });
         $items = [
             [
-                'icon' => 'hero-icon-1',
                 'number' => '01',
-                'title' => 'Title 1',
+                'title' => [
+                    'en' => 'Title 1',
+                    'de' => 'Title 1',
+                ],
             ],
             [
-                'icon' => 'hero-icon-1',
                 'number' => '01',
-                'title' => 'Title 2',
+                'title' => [
+                    'en' => 'Title 2',
+                    'de' => 'Title 2',
+                ],
             ],
             [
-                'icon' => 'hero-icon-1',
                 'number' => '01',
-                'title' => 'Title 3',
+                'title' => [
+                    'en' => 'Title 3',
+                    'de' => 'Title 3',
+                ],
             ],
             [
-                'icon' => 'hero-icon-1',
                 'number' => '01',
-                'title' => 'Title 4',
+                'title' => [
+                    'en' => 'Title 4',
+                    'de' => 'Title 4',
+                ],
             ],
             [
-                'icon' => 'hero-icon-1',
                 'number' => '01',
-                'title' => 'Title 5',
+                'title' => [
+                    'en' => 'Title 5',
+                    'de' => 'Title 5',
+                ],
             ],
         ];
         DB::table('hero_items')->insert($items);

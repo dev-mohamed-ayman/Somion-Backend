@@ -18,6 +18,7 @@ class TasksResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'end_date' => $this->end_date,
+            'bg_color' => $this->bg_color,
             'comments_count' => $this->comments()->count(),
             'employees' => $this->employees()->latest()->with('user')->get()->map(function ($employee) {
                 return [
