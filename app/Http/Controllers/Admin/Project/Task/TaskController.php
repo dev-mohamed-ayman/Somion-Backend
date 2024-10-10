@@ -99,13 +99,13 @@ class TaskController extends Controller
 
     public function order(Request $request)
     {
-        foreach ($request->data as $section => $tasks) {
-            foreach ($tasks as $order => $task) {
-                Task::query()->where('id', $task)->update([
-                    'order' => $order,
-                    'section_id' => $section,
-                ]);
-            }
+        $data = $request->input('data', []);
+
+        foreach ($data as $item) {
+            Task::query()->where('id', $item['id'])->update([
+                'order' => $item['order'],
+                'section_id' => $item['section_id'],
+            ]);
         }
 
         return apiResponse(true, 200, __('words.Successfully updated'));
