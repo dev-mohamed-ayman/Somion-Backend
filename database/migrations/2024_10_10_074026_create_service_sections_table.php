@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->json('title');
             $table->timestamps();
         });
-        \Illuminate\Support\Facades\DB::table('service_sections')->create([
+        \App\Models\ServiceSection::create([
             'title' => [
                 'en' => 'Our Digital Services',
                 'de' => 'Our Digital Services'

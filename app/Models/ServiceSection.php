@@ -11,4 +11,5 @@ class ServiceSection extends Model
     use HasFactory, HasTranslations;
 
     public $translatable = ['title'];
+    protected $guarded = [];
 }

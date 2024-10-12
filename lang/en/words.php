@@ -34,4 +34,6 @@ return [
     'No check-in found or already checked out' => 'No check-in found or already checked out',
     'Leave request not found' => 'Leave request not found',
     'You are not allowed to update this leave request' => 'You are not allowed to update this leave request',
+    'Not found' => 'Not found',
+    'Cannot delete category with associated services' => 'Cannot delete category with associated services',
 ];

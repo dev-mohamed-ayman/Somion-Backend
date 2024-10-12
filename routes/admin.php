@@ -165,5 +165,22 @@ Route::middleware('auth:sanctum')->group(function () {
         // Hero routes
         Route::get('hero', [\App\Http\Controllers\Admin\Website\HeroController::class, 'index']);
         Route::post('hero', [\App\Http\Controllers\Admin\Website\HeroController::class, 'update']);
+
+
+        // Service section routes
+        Route::apiResource('service/section', \App\Http\Controllers\Admin\Website\Service\ServiceSectionController::class)->only('index', 'store');
+
+        // Service category routes
+        Route::apiResource('service/category', \App\Http\Controllers\Admin\Website\Service\ServiceCategoryController::class);
+
+        // Service feature routes
+        Route::apiResource('service/feature', \App\Http\Controllers\Admin\Website\Service\ServiceFeatureController::class);
+
+        // Service plane routes
+        Route::apiResource('service/plane', \App\Http\Controllers\Admin\Website\Service\ServicePlaneController::class);
+
+        // Service routes
+        Route::apiResource('service', \App\Http\Controllers\Admin\Website\Service\ServiceController::class);
+
     });
 });

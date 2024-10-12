@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HeroItem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ return new class extends Migration {
         Schema::create('hero_items', function (Blueprint $table) {
             $table->id();
             $table->string('number');
-            $table->json('title')->unique();
+            $table->json('title');
             $table->timestamps();
         });
         $items = [
@@ -53,7 +54,9 @@ return new class extends Migration {
                 ],
             ],
         ];
-        DB::table('hero_items')->insert($items);
+        foreach ($items as $item) {
+            HeroItem::create($item);
+        }
     }
 
     /**
