@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Website;
+namespace App\Http\Requests\Admin\Website\Service;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class HeroRequest extends FormRequest
+class ServiceUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,21 +35,26 @@ class HeroRequest extends FormRequest
             'title.en' => 'required_with:title|string',
             'title.de' => 'required_with:title|string',
 
+            'main_title' => 'required|array',
+            'main_title.en' => 'required_with:main_title|string',
+            'main_title.de' => 'required_with:main_title|string',
+
+            'sub_title' => 'required|array',
+            'sub_title.en' => 'required_with:sub_title|string',
+            'sub_title.de' => 'required_with:sub_title|string',
+
             'short_description' => 'required|array',
             'short_description.en' => 'required_with:short_description|string',
             'short_description.de' => 'required_with:short_description|string',
 
-            'btn_title' => 'required|array',
-            'btn_title.en' => 'required_with:btn_title|string',
-            'btn_title.de' => 'required_with:btn_title|string',
+            'description' => 'required|array',
+            'description.en' => 'required_with:description|string',
+            'description.de' => 'required_with:description|string',
 
-            'items' => 'nullable|array',
-            'items.*' => 'required_with:items|array',
-            'items.*.id' => 'required_with:items.*|exists:hero_items,id',
-            'items.*.number' => 'required_with:items.*|string',
-            'items.*.title' => 'required_with:items.*|array',
-            'items.*.title.en' => 'required_with:items.*.title|string',
-            'items.*.title.de' => 'required_with:items.*.title|string',
+            'service_category_id' => 'required|exists:service_categories,id',
+            'image' => 'nullable|image',
+            'main_image' => 'nullable|image',
+
         ];
     }
 }

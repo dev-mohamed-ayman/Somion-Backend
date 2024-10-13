@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->json('description');
             $table->string('image');
             $table->string('main_image');
+            $table->foreignId('service_category_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

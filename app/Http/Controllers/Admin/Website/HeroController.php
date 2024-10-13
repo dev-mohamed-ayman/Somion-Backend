@@ -36,7 +36,6 @@ class HeroController extends Controller
                 HeroItem::query()->updateOrCreate([
                     'id' => $item['id'],
                 ], [
-                    'icon' => $item['icon'],
                     'number' => $item['number'],
                     'title' => $item['title'],
                 ]);

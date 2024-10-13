@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->json('btn_title');
             $table->timestamps();
         });
-        \Illuminate\Support\Facades\DB::table('heroes')->insert([
+        \App\Models\Hero::create([
             'title' => [
                 'en' => 'Hero Title',
                 'de' => 'Hero Title',
