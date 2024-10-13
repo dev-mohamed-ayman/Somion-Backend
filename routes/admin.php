@@ -182,5 +182,13 @@ Route::middleware('auth:sanctum')->group(function () {
         // Service routes
         Route::apiResource('service', \App\Http\Controllers\Admin\Website\Service\ServiceController::class);
 
+        // Project routes
+        Route::apiResource('project/section', \App\Http\Controllers\Admin\Website\Project\HomeProjectSectionController::class)->only('index', 'store');
+        Route::apiResource('project/category', \App\Http\Controllers\Admin\Website\Project\HomeProjectCategoryController::class);
+        Route::apiResource('project/image', \App\Http\Controllers\Admin\Website\Project\HomeProjectImageController::class)->only('destroy', 'store');
+
+        // Project routes
+        Route::apiResource('project', \App\Http\Controllers\Admin\Website\Project\HomeProjectController::class);
+
     });
 });
