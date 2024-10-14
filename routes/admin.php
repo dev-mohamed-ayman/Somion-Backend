@@ -112,7 +112,6 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('', 'index');
             Route::get('users', 'users');
             Route::get('employees', 'employees');
-//            Route::get('', 'index');
             Route::post('update-status-order', 'updateStatusAndOrder');
             Route::get('{project}', 'show');
             Route::post('{project}', 'update');
