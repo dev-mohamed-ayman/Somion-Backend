@@ -160,11 +160,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
+    // Website routes
     Route::prefix('website')->group(function () {
         // Hero routes
         Route::get('hero', [\App\Http\Controllers\Admin\Website\HeroController::class, 'index']);
         Route::post('hero', [\App\Http\Controllers\Admin\Website\HeroController::class, 'update']);
-
 
         // Service section routes
         Route::apiResource('service/section', \App\Http\Controllers\Admin\Website\Service\ServiceSectionController::class)->only('index', 'store');
@@ -190,8 +190,21 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('brand', \App\Http\Controllers\Admin\Website\BrandController::class)->only('index', 'store', 'destroy');
         Route::post('brand/section', [\App\Http\Controllers\Admin\Website\BrandController::class, 'updateBrandSection']);
 
-        // Brand routes
+        // Why routes
         Route::apiResource('why', \App\Http\Controllers\Admin\Website\WhyController::class);
         Route::post('why/section', [\App\Http\Controllers\Admin\Website\WhyController::class, 'updateWhySection']);
+
+        // Rate routes
+        Route::apiResource('rate', \App\Http\Controllers\Admin\Website\RateController::class);
+        Route::post('rate/section', [\App\Http\Controllers\Admin\Website\RateController::class, 'updateRateSection']);
+
+        // Start section routes
+        Route::apiResource('start-section', \App\Http\Controllers\Admin\Website\StartSectionController::class)->only('index', 'store');
+
+        // Footer routes
+        Route::apiResource('Footer', \App\Http\Controllers\Admin\Website\FooterController::class)->only('index', 'store');
+
+        // Imprint routes
+        Route::apiResource('imprint', \App\Http\Controllers\Admin\Website\ImprintController::class)->only('index', 'store');
     });
 });
