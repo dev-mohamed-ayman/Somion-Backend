@@ -113,10 +113,10 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('users', 'users');
             Route::get('employees', 'employees');
             Route::post('update-status-order', 'updateStatusAndOrder');
-            Route::get('{project}', 'show');
-            Route::post('{project}', 'update');
-            Route::post('', 'create');
-            Route::delete('{project}', 'destroy');
+            Route::get('/{project}', 'show');
+            Route::post('/{project}', 'update');
+            Route::post('/', 'create');
+            Route::delete('/{project}', 'destroy');
         });
 
         // Section routes
