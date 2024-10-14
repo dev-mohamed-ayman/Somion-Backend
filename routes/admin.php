@@ -107,18 +107,6 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('{client}', 'destroy');
         });
 
-        // Projects routes
-        Route::controller(\App\Http\Controllers\Admin\Project\ProjectController::class)->group(function () {
-            Route::get('', 'index');
-            Route::get('users', 'users');
-            Route::get('employees', 'employees');
-            Route::post('update-status-order', 'updateStatusAndOrder');
-            Route::get('/{project}', 'show');
-            Route::post('/{project}', 'update');
-            Route::post('/', 'create');
-            Route::delete('/{project}', 'destroy');
-        });
-
         // Section routes
         Route::prefix('section')->controller(\App\Http\Controllers\Admin\Project\SectionController::class)->group(function () {
             Route::get('{project}/dropdown', 'dropdown');
@@ -156,6 +144,18 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::post('complete/{taskChecklist}', 'complete');
                 Route::delete('{taskChecklist}', 'destroy');
             });
+        });
+
+        // Projects routes
+        Route::controller(\App\Http\Controllers\Admin\Project\ProjectController::class)->group(function () {
+            Route::get('', 'index');
+            Route::get('users', 'users');
+            Route::get('employees', 'employees');
+            Route::post('update-status-order', 'updateStatusAndOrder');
+            Route::get('/{project}', 'show');
+            Route::post('/{project}', 'update');
+            Route::post('/', 'create');
+            Route::delete('/{project}', 'destroy');
         });
 
     });
