@@ -169,26 +169,30 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Service section routes
         Route::apiResource('service/section', \App\Http\Controllers\Admin\Website\Service\ServiceSectionController::class)->only('index', 'store');
-
         // Service category routes
         Route::apiResource('service/category', \App\Http\Controllers\Admin\Website\Service\ServiceCategoryController::class);
-
         // Service feature routes
         Route::apiResource('service/feature', \App\Http\Controllers\Admin\Website\Service\ServiceFeatureController::class);
-
         // Service plane routes
         Route::apiResource('service/plane', \App\Http\Controllers\Admin\Website\Service\ServicePlaneController::class);
-
         // Service routes
         Route::apiResource('service', \App\Http\Controllers\Admin\Website\Service\ServiceController::class);
 
-        // Project routes
+        // Project section routes
         Route::apiResource('project/section', \App\Http\Controllers\Admin\Website\Project\HomeProjectSectionController::class)->only('index', 'store');
+        // Project category routes
         Route::apiResource('project/category', \App\Http\Controllers\Admin\Website\Project\HomeProjectCategoryController::class);
+        // Project image routes
         Route::apiResource('project/image', \App\Http\Controllers\Admin\Website\Project\HomeProjectImageController::class)->only('destroy', 'store');
-
         // Project routes
         Route::apiResource('project', \App\Http\Controllers\Admin\Website\Project\HomeProjectController::class);
 
+        // Brand routes
+        Route::apiResource('brand', \App\Http\Controllers\Admin\Website\BrandController::class)->only('index', 'store', 'destroy');
+        Route::post('brand/section', [\App\Http\Controllers\Admin\Website\BrandController::class, 'updateBrandSection']);
+
+        // Brand routes
+        Route::apiResource('why', \App\Http\Controllers\Admin\Website\WhyController::class);
+        Route::post('why/section', [\App\Http\Controllers\Admin\Website\WhyController::class, 'updateWhySection']);
     });
 });
