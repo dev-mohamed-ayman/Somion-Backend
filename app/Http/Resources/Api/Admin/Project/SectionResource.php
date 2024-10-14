@@ -24,7 +24,7 @@ class SectionResource extends JsonResource
                 ->orderBy('order', 'asc')
                 ->with(['tasks' => function ($tasks) {
                     $tasks->orderBy('order', 'asc')
-                        ->select('id', 'title', 'section_id', 'bg_color')
+                        ->select('id', 'title', 'section_id', 'bg_color', 'end_date', 'start_date')
                         ->with('checklists:id,task_id,text,completed');
                 }])
                 ->select('id', 'title', 'bg_color')
