@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api\Admin\Project;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Api\Admin\Project\Task\CommentResource;
 
 class SectionResource extends JsonResource
 {
@@ -25,7 +26,15 @@ class SectionResource extends JsonResource
                 ->with(['tasks' => function ($tasks) {
                     $tasks->orderBy('order', 'asc')
                         ->select('id', 'title', 'section_id', 'bg_color', 'end_date', 'start_date')
-                        ->with('checklists:id,task_id,text,completed');
+                        ->with([
+                            'checklists:id,task_id,text,completed',
+                            'comments' => function ($comments) {
+                                $comments->select('id', 'task_id', 'comment', 'created_at', 'user_id')
+                                    ->with('user:id,name,image')
+                                    ->with('files')
+                                    ->get();
+                            }
+                        ]);
                 }])
                 ->select('id', 'title', 'bg_color')
                 ->get(),
