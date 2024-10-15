@@ -86,4 +86,28 @@ class CommentController extends Controller
     {
         return response()->download($taskCommentFile->path);
     }
+
+    public function destroy(TaskComment $taskComment)
+    {
+        DB::beginTransaction();
+        try {
+            if ($taskComment->user_id !== auth()->id()) {
+                return apiResponse(false, 403, __('words.Unauthorized to delete this comment'));
+            }
+
+            $taskCommentFiles = $taskComment->files;
+            foreach ($taskCommentFiles as $taskCommentFile) {
+                deleteFile($taskCommentFile->path);
+                $taskCommentFile->delete();
+            }
+
+            $taskComment->delete();
+
+            DB::commit();
+            return apiResponse(true, 200, __('words.Successfully deleted'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return apiResponse(false, 500, $e->getMessage());
+        }
+    }
 }

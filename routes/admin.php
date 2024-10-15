@@ -133,6 +133,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::prefix('comment')->controller(\App\Http\Controllers\Admin\Project\Task\CommentController::class)->group(function () {
                 Route::post('', 'create');
                 Route::post('{taskComment}', 'update');
+                Route::delete('{taskCommentFile}', 'destroy');
                 Route::delete('file/{taskCommentFile}', 'deleteFile');
                 Route::get('file/{taskCommentFile}', 'downloadFile');
             });

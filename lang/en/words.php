@@ -35,5 +35,6 @@ return [
     'Leave request not found' => 'Leave request not found',
     'You are not allowed to update this leave request' => 'You are not allowed to update this leave request',
     'Not found' => 'Not found',
+    'Unauthorized to delete this comment' => 'Unauthorized to delete this comment',
     'Cannot delete category with associated services' => 'Cannot delete category with associated services',
 ];
