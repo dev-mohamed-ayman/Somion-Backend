@@ -65,6 +65,7 @@ class BrandController extends Controller
         if (!$brand) {
             return apiResponse(false, 404, __('words.Not found'));
         }
+        deleteFile($brand->image);
         $brand->delete();
         return apiResponse(true, 200, __('words.Successfully deleted'));
     }

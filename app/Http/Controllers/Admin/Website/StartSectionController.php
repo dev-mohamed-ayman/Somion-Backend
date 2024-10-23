@@ -30,9 +30,9 @@ class StartSectionController extends Controller
             'description' => 'required|array',
             'description.en' => 'required_with:description|string',
             'description.de' => 'required_with:description|string',
-            'brn_title' => 'required|array',
-            'brn_title.en' => 'required_with:brn_title|string',
-            'brn_title.de' => 'required_with:brn_title|string',
+            'btn_title' => 'required|array',
+            'btn_title.en' => 'required_with:btn_title|string',
+            'btn_title.de' => 'required_with:btn_title|string',
         ]);
         if ($validator->fails()) {
             return apiResponse(false, 422, $validator->messages()->all());

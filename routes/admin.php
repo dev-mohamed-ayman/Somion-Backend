@@ -203,9 +203,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('start-section', \App\Http\Controllers\Admin\Website\StartSectionController::class)->only('index', 'store');
 
         // Footer routes
-        Route::apiResource('Footer', \App\Http\Controllers\Admin\Website\FooterController::class)->only('index', 'store');
+        Route::apiResource('footer', \App\Http\Controllers\Admin\Website\FooterController::class)->only('index', 'store');
 
         // Imprint routes
         Route::apiResource('imprint', \App\Http\Controllers\Admin\Website\ImprintController::class)->only('index', 'store');
+
+        // Contact routes
+        Route::apiResource('contact/section', \App\Http\Controllers\Admin\Website\Contact\ContactSectionController::class)->only('index', 'store');
+
+        // About routes
+        Route::apiResource('about', \App\Http\Controllers\Admin\Website\AboutController::class)->only('index', 'store');
     });
 });
