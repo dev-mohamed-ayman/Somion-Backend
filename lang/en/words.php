@@ -37,4 +37,5 @@ return [
     'Not found' => 'Not found',
     'Unauthorized to delete this comment' => 'Unauthorized to delete this comment',
     'Cannot delete category with associated services' => 'Cannot delete category with associated services',
+    "Successfully subscribed" => 'Successfully subscribed'
 ];

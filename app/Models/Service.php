@@ -37,4 +37,14 @@ class Service extends Model
     {
         return $this->belongsTo(ServiceCategory::class, 'service_category_id', 'id');
     }
+
+    public function features()
+    {
+        return $this->hasMany(ServiceFeature::class, 'service_id', 'id');
+    }
+
+    public function plans()
+    {
+        return $this->hasMany(ServicePlane::class, 'service_id', 'id');
+    }
 }

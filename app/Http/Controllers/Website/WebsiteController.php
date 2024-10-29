@@ -3,22 +3,27 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\About;
 use App\Models\Brand;
 use App\Models\BrandSection;
+use App\Models\ContactSection;
 use App\Models\Footer;
 use App\Models\Hero;
 use App\Models\HeroItem;
 use App\Models\HomeProject;
 use App\Models\HomeProjectSection;
+use App\Models\Imprint;
 use App\Models\Rate;
 use App\Models\RateSection;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceSection;
 use App\Models\StartSection;
+use App\Models\Subscription;
 use App\Models\Why;
 use App\Models\WhySection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WebsiteController extends Controller
 {
@@ -89,11 +94,34 @@ class WebsiteController extends Controller
     {
         $rates = [
             'section' => RateSection::query()->select('title', 'sub_title', 'paragraph')->first(),
-            'rates' => Rate::query()->where('status', true)
+            'rates' => Rate::query()->active()
                 ->select('first_name', 'last_name', 'image', 'message', 'rate')
                 ->get()
         ];
         return apiResponse(true, 200, $rates);
+    }
+
+    public function rate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'message' => 'required|string',
+            'rate' => 'required|gte:0|lte:5',
+            'image' => 'nullable|image'
+        ]);
+        if ($validator->fails()) {
+            return apiResponse(false, 422, $validator->messages()->all());
+        }
+        $rate = new Rate();
+        $rate->first_name = $request->first_name;
+        $rate->last_name = $request->last_name;
+        if ($request->image)
+            $rate->image = uploadFile('rates', $request->image);
+        $rate->message = $request->message;
+        $rate->rate = $request->rate;
+        $rate->save();
+        return apiResponse(true, 201, __('words.Successfully created'));
     }
 
     public function startSection()
@@ -114,4 +142,109 @@ class WebsiteController extends Controller
             'serviceCategories' => $serviceCategories,
         ]);
     }
+
+    public function subscription(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email', 'unique:subscriptions,email'],
+        ]);
+        if ($validator->fails()) {
+            return apiResponse(false, 400, $validator->messages()->all());
+        }
+
+        $subscription = new Subscription();
+        $subscription->email = $request->email;
+        $subscription->save();
+
+        return apiResponse(true, 200, __('words.Successfully subscribed'));
+    }
+
+    public function imprint()
+    {
+        $imprint = Imprint::query()
+            ->select('title', 'body')
+            ->first();
+
+        return apiResponse(true, 200, $imprint);
+    }
+
+    public function contact(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|string|email',
+            'company_name' => 'required|string',
+            'service_id' => 'required|exists:services,id',
+            'type' => 'required|string',
+            'message' => 'required|string'
+        ]);
+        if ($validator->fails()) {
+            return apiResponse(false, 400, $validator->messages()->all());
+        }
+
+        $contact = new \App\Models\Contact();
+        $contact->first_name = $request->first_name;
+        $contact->last_name = $request->last_name;
+        $contact->email = $request->email;
+        $contact->company_name = $request->company_name;
+        $contact->service_id = $request->service_id;
+        $contact->type = $request->type;
+        $contact->message = $request->message;
+        $contact->save();
+
+        return apiResponse(true, 200, __('words.Successfully created'));
+
+    }
+
+    public function contactSection()
+    {
+        $contactSection = ContactSection::query()
+            ->select('first_title', 'second_title', 'three_title', 'four_title')
+            ->first();
+        $footerData = Footer::query()
+            ->select('instagram', 'linkedin', 'x', 'be', 'location', 'phone', 'whatsapp', 'emails')
+            ->first();
+
+        return apiResponse(true, 200, [
+            'contactSection' => $contactSection,
+            'footerData' => $footerData,
+        ]);
+    }
+
+    public function about()
+    {
+        $about = About::query()
+            ->select('title', 'sub_title', 'description', 'last_title', 'items', 'our_mission')
+            ->first();
+    }
+
+    public function serviceCategory($id)
+    {
+        $serviceCategory = ServiceCategory::find($id);
+        if (!$serviceCategory) {
+            return apiResponse(false, 404, __('words.Not found'));
+        }
+
+        $services = Service::query()
+            ->where('service_category_id', $id)
+            ->select('id', 'title', 'main_title', 'sub_title', 'description', 'short_description', 'image', 'main_image')
+            ->get();
+
+        return apiResponse(true, 200, [
+            'category' => $serviceCategory,
+            'services' => $services,
+        ]);
+    }
+
+    public function service($id)
+    {
+        $service = Service::query()->with('features', 'plans')->find($id);
+        if (!$service) {
+            return apiResponse(false, 404, __('words.Not found'));
+        }
+
+        return apiResponse(true, 200, $service);
+    }
+
 }
