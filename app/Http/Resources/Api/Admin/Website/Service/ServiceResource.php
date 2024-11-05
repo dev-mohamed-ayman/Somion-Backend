@@ -27,6 +27,8 @@ class ServiceResource extends JsonResource
             'description' => $this->getTranslations('description'),
             'image' => $this->image,
             'main_image' => $this->main_image,
+            'meta_description' => $this->meta_description,
+            'meta_keywords' => $this->meta_keywords,
             'category' => $categoryArray,
         ];
     }

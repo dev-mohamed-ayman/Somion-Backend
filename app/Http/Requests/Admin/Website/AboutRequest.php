@@ -63,6 +63,14 @@ class AboutRequest extends FormRequest
             'our_mission.en' => 'required_with:our_mission|string',
             'our_mission.de' => 'required_with:our_mission|string',
 
+            'meta_description' => 'nullable|array',
+            'meta_description.en' => 'required_with:meta_description|string',
+            'meta_description.de' => 'required_with:meta_description|string',
+
+            'meta_keywords' => 'nullable|array',
+            'meta_keywords.en' => 'required_with:meta_keywords|string',
+            'meta_keywords.de' => 'required_with:meta_keywords|string',
+
         ];
     }
 }

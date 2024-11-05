@@ -17,6 +17,8 @@ class Service extends Model
         'sub_title',
         'short_description',
         'description',
+        'meta_description',
+        'meta_keywords'
     ];
 
     protected function Image(): Attribute

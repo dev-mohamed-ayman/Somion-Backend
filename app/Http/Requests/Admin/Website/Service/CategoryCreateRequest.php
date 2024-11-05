@@ -17,11 +17,11 @@ class CategoryCreateRequest extends FormRequest
     }
 
     public function failedValidation(Validator $validator)
-        {
-            $response = apiResponse(false, 422, $validator->messages()->all());
+    {
+        $response = apiResponse(false, 422, $validator->messages()->all());
 
-            throw new ValidationException($validator, $response);
-        }
+        throw new ValidationException($validator, $response);
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -38,6 +38,16 @@ class CategoryCreateRequest extends FormRequest
             'main_title' => 'required|array',
             'main_title.en' => 'required_with:main_title|string',
             'main_title.de' => 'required_with:main_title|string',
+
+            'meta_description' => 'nullable|array',
+            'meta_description.en' => 'required_with:meta_description|string',
+            'meta_description.de' => 'required_with:meta_description|string',
+
+            'meta_keywords' => 'nullable|array',
+            'meta_keywords.en' => 'required_with:meta_keywords|string',
+            'meta_keywords.de' => 'required_with:meta_keywords|string',
+
+            'image' => 'required|image'
         ];
     }
 }

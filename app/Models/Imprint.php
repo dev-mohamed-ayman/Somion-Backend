@@ -10,6 +10,6 @@ class Imprint extends Model
 {
     use HasFactory, HasTranslations;
 
-    public $translatable = ['title', 'body'];
+    public $translatable = ['title', 'body', 'meta_description', 'meta_keywords',];
     protected $guarded = [];
 }

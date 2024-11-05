@@ -32,6 +32,8 @@ class ServiceController extends Controller
         $service->short_description = $request->short_description;
         $service->description = $request->description;
         $service->service_category_id = $request->service_category_id;
+        $service->meta_description = $request->meta_description;
+        $service->meta_keywords = $request->meta_keywords;
         $service->image = uploadFile('services', $request->image);
         $service->main_image = uploadFile('services', $request->main_image);
         $service->save();
@@ -67,6 +69,8 @@ class ServiceController extends Controller
         $service->short_description = $request->short_description;
         $service->description = $request->description;
         $service->service_category_id = $request->service_category_id;
+        $service->meta_description = $request->meta_description;
+        $service->meta_keywords = $request->meta_keywords;
         if ($request->image) {
             deleteFile($service->image);
             $service->image = uploadFile('services', $request->image);

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Website\Service;
+namespace App\Http\Requests\Admin\Website;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class ServiceCreateRequest extends FormRequest
+class BlogCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,38 +31,31 @@ class ServiceCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'blog_type_id' => 'required|exists:blog_types,id',
+
             'title' => 'required|array',
             'title.en' => 'required_with:title|string',
             'title.de' => 'required_with:title|string',
-
-            'main_title' => 'required|array',
-            'main_title.en' => 'required_with:main_title|string',
-            'main_title.de' => 'required_with:main_title|string',
-
-            'sub_title' => 'required|array',
-            'sub_title.en' => 'required_with:sub_title|string',
-            'sub_title.de' => 'required_with:sub_title|string',
-
-            'short_description' => 'required|array',
-            'short_description.en' => 'required_with:short_description|string',
-            'short_description.de' => 'required_with:short_description|string',
 
             'description' => 'required|array',
             'description.en' => 'required_with:description|string',
             'description.de' => 'required_with:description|string',
 
-            'service_category_id' => 'required|exists:service_categories,id',
-            'image' => 'required|image',
-            'main_image' => 'required|image',
+            'body' => 'required|array',
+            'body.en' => 'required_with:body|string',
+            'body.de' => 'required_with:body|string',
+
+            'image' => 'required|array',
+            'image.en' => 'required_with:image|image',
+            'image.de' => 'required_with:image|image',
 
             'meta_description' => 'nullable|array',
             'meta_description.en' => 'required_with:meta_description|string',
             'meta_description.de' => 'required_with:meta_description|string',
 
-            'meta_keywords' => 'nullable|array',
-            'meta_keywords.en' => 'required_with:meta_keywords|string',
-            'meta_keywords.de' => 'required_with:meta_keywords|string',
-
+            'meta_tags' => 'nullable|array',
+            'meta_tags.en' => 'required_with:meta_tags|string',
+            'meta_tags.de' => 'required_with:meta_tags|string',
         ];
     }
 }

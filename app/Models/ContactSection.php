@@ -15,6 +15,8 @@ class ContactSection extends Model
         'second_title',
         'three_title',
         'four_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     protected $guarded = [];

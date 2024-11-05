@@ -21,6 +21,8 @@ class AboutController extends Controller
             'last_title',
             'items',
             'our_mission',
+            'meta_description',
+            'meta_keywords',
             'updated_at as last_update'
         )->first();
         return apiResponse(true, 200, $data);
@@ -38,6 +40,8 @@ class AboutController extends Controller
         $about->last_title = $request->last_title;
         $about->items = $request->items;
         $about->our_mission = $request->our_mission;
+        $about->meta_description = $request->meta_description;
+        $about->meta_keywords = $request->meta_keywords;
         $about->save();
 
         return apiResponse(true, 200, __('words.Successfully updated'));

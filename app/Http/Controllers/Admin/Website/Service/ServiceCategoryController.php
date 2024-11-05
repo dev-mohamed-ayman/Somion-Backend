@@ -27,6 +27,9 @@ class ServiceCategoryController extends Controller
         $serviceCategory = new ServiceCategory();
         $serviceCategory->title = $request->title;
         $serviceCategory->main_title = $request->main_title;
+        $serviceCategory->meta_description = $request->meta_description;
+        $serviceCategory->meta_keywords = $request->meta_keywords;
+        $serviceCategory->image = uploadFile('services', $request->image);
         $serviceCategory->save();
         return apiResponse(true, 201, __('words.Successfully created'));
     }
@@ -54,6 +57,12 @@ class ServiceCategoryController extends Controller
         }
         $serviceCategory->title = $request->title;
         $serviceCategory->main_title = $request->main_title;
+        $serviceCategory->meta_description = $request->meta_description;
+        $serviceCategory->meta_keywords = $request->meta_keywords;
+        if ($request->image) {
+            deleteFile($serviceCategory->image);
+            $serviceCategory->image = uploadFile('services', $request->image);
+        }
         $serviceCategory->save();
 
         return apiResponse(true, 200, __('words.Successfully updated'));
@@ -71,6 +80,7 @@ class ServiceCategoryController extends Controller
         if (!$serviceCategory) {
             return apiResponse(false, 404, __('words.Not found'));
         }
+        deleteFile($serviceCategory->image);
         $serviceCategory->delete();
         return apiResponse(true, 200, __('words.Successfully deleted'));
     }

@@ -16,7 +16,7 @@ function uploadFile($path, $file)
 {
     $extension = strtolower($file->getClientOriginalExtension());
     $name = time() . rand(100, 999) . '.' . $extension;
-    return $file->move('uploads/' . $path, $name);
+    return (string)$file->move('uploads/' . $path, $name);
 }
 
 function deleteFile($file)

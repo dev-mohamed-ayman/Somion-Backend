@@ -55,6 +55,14 @@ class ServiceUpdateRequest extends FormRequest
             'image' => 'nullable|image',
             'main_image' => 'nullable|image',
 
+            'meta_description' => 'nullable|array',
+            'meta_description.en' => 'required_with:meta_description|string',
+            'meta_description.de' => 'required_with:meta_description|string',
+
+            'meta_keywords' => 'nullable|array',
+            'meta_keywords.en' => 'required_with:meta_keywords|string',
+            'meta_keywords.de' => 'required_with:meta_keywords|string',
+
         ];
     }
 }

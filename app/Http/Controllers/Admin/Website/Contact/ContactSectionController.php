@@ -19,6 +19,8 @@ class ContactSectionController extends Controller
             'second_title',
             'three_title',
             'four_title',
+            'meta_description',
+            'meta_keywords',
             'updated_at as last_update'
         )->first();
         return apiResponse(true, 200, $data);
@@ -47,6 +49,14 @@ class ContactSectionController extends Controller
             'four_title.en' => 'required_with:four_title|string',
             'four_title.de' => 'required_with:four_title|string',
 
+            'meta_description' => 'nullable|array',
+            'meta_description.en' => 'required_with:meta_description|string',
+            'meta_description.de' => 'required_with:meta_description|string',
+
+            'meta_keywords' => 'nullable|array',
+            'meta_keywords.en' => 'required_with:meta_keywords|string',
+            'meta_keywords.de' => 'required_with:meta_keywords|string',
+
         ]);
         if ($validator->fails()) {
             return apiResponse(false, 422, $validator->messages()->all());
@@ -60,6 +70,8 @@ class ContactSectionController extends Controller
         $contactSection->second_title = $request->second_title;
         $contactSection->three_title = $request->three_title;
         $contactSection->four_title = $request->four_title;
+        $contactSection->meta_description = $request->meta_description;
+        $contactSection->meta_keywords = $request->meta_keywords;
         $contactSection->save();
         return apiResponse(true, 200, __('words.Successfully updated'));
     }

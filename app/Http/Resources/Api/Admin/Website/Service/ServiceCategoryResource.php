@@ -18,6 +18,9 @@ class ServiceCategoryResource extends JsonResource
             'id' => $this->id,
             'title' => $this->getTranslations('title'),
             'main_title' => $this->getTranslations('main_title'),
+            'image' => $this->image,
+            'meta_description' => $this->meta_description,
+            'meta_keywords' => $this->meta_keywords,
             'count_services' => $this->services()->count()
         ];
     }

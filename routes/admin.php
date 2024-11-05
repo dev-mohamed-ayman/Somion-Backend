@@ -213,5 +213,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // About routes
         Route::apiResource('about', \App\Http\Controllers\Admin\Website\AboutController::class)->only('index', 'store');
+
+        // Blog types routes
+        Route::apiResource('blog/type', \App\Http\Controllers\Admin\Website\Blog\BlogTypeController::class);
+        Route::post('blog/type/order', [\App\Http\Controllers\Admin\Website\Blog\BlogTypeController::class, 'order']);
+
+        // Blog routes
+        Route::apiResource('blog', \App\Http\Controllers\Admin\Website\Blog\BlogController::class);
+        Route::post('blog/order', [\App\Http\Controllers\Admin\Website\Blog\BlogController::class, 'order']);
+
+        // Home settings routes
+        Route::get('setting', [\App\Http\Controllers\Admin\Website\SettingController::class, 'index']);
+        Route::post('setting', [\App\Http\Controllers\Admin\Website\SettingController::class, 'update']);
     });
 });

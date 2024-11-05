@@ -14,7 +14,13 @@ class ImprintController extends Controller
      */
     public function index()
     {
-        $imprint = Imprint::query()->select('title', 'body', 'updated_at as last_update')->first();
+        $imprint = Imprint::query()->select(
+            'title',
+            'body',
+            'meta_description',
+            'meta_keywords',
+            'updated_at as last_update'
+        )->first();
         return apiResponse(true, 200, $imprint);
     }
 
@@ -30,6 +36,12 @@ class ImprintController extends Controller
             'body' => 'required|array',
             'body.en' => 'required_with:body|string',
             'body.de' => 'required_with:body|string',
+            'meta_description' => 'nullable|array',
+            'meta_description.en' => 'required_with:meta_description|string',
+            'meta_description.de' => 'required_with:meta_description|string',
+            'meta_keywords' => 'nullable|array',
+            'meta_keywords.en' => 'required_with:meta_keywords|string',
+            'meta_keywords.de' => 'required_with:meta_keywords|string',
         ]);
         if ($validator->fails()) {
             return apiResponse(false, 400, $validator->messages()->all());
@@ -37,6 +49,8 @@ class ImprintController extends Controller
         $imprint = Imprint::first();
         $imprint->title = $request->title;
         $imprint->body = $request->body;
+        $imprint->meta_description = $request->meta_description;
+        $imprint->meta_keywords = $request->meta_keywords;
         $imprint->save();
         return apiResponse(true, 200, __('words.Successfully updated'));
     }

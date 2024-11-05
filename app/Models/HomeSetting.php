@@ -6,19 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
-class About extends Model
+class HomeSetting extends Model
 {
     use HasFactory, HasTranslations;
 
-    public $translatable = [
-        'title',
-        'sub_title',
-        'description',
-        'last_title',
-        'items',
-        'our_mission',
-        'meta_description',
-        'meta_keywords',
-    ];
+    protected $translatable = ['title', 'meta_description', 'meta_keywords'];
     protected $guarded = [];
 }

@@ -12,6 +12,7 @@ use App\Models\Hero;
 use App\Models\HeroItem;
 use App\Models\HomeProject;
 use App\Models\HomeProjectSection;
+use App\Models\HomeSetting;
 use App\Models\Imprint;
 use App\Models\Rate;
 use App\Models\RateSection;
@@ -42,7 +43,7 @@ class WebsiteController extends Controller
         $services = [
             'section' => ServiceSection::query()->select('title')->first(),
             'services' => ServiceCategory::query()
-                ->select('id', 'title')
+                ->select('id', 'title', 'image')
                 ->with(['services' => function ($service) {
                     $service->select('id', 'title', 'service_category_id');
                 }])
@@ -162,7 +163,7 @@ class WebsiteController extends Controller
     public function imprint()
     {
         $imprint = Imprint::query()
-            ->select('title', 'body')
+            ->select('title', 'body', 'meta_description', 'meta_keywords')
             ->first();
 
         return apiResponse(true, 200, $imprint);
@@ -200,7 +201,7 @@ class WebsiteController extends Controller
     public function contactSection()
     {
         $contactSection = ContactSection::query()
-            ->select('first_title', 'second_title', 'three_title', 'four_title')
+            ->select('first_title', 'second_title', 'three_title', 'four_title', 'meta_description', 'meta_keywords')
             ->first();
         $footerData = Footer::query()
             ->select('instagram', 'linkedin', 'x', 'be', 'location', 'phone', 'whatsapp', 'emails')
@@ -215,8 +216,9 @@ class WebsiteController extends Controller
     public function about()
     {
         $about = About::query()
-            ->select('title', 'sub_title', 'description', 'last_title', 'items', 'our_mission')
+            ->select('title', 'sub_title', 'description', 'last_title', 'items', 'our_mission', 'meta_description', 'meta_keywords')
             ->first();
+        return apiResponse(true, 200, $about);
     }
 
     public function serviceCategory($id)
@@ -228,7 +230,7 @@ class WebsiteController extends Controller
 
         $services = Service::query()
             ->where('service_category_id', $id)
-            ->select('id', 'title', 'main_title', 'sub_title', 'description', 'short_description', 'image', 'main_image')
+            ->select('id', 'title', 'main_title', 'sub_title', 'description', 'short_description', 'image', 'main_image', 'meta_description', 'meta_keywords')
             ->get();
 
         return apiResponse(true, 200, [
@@ -239,12 +241,23 @@ class WebsiteController extends Controller
 
     public function service($id)
     {
-        $service = Service::query()->with('features', 'plans')->find($id);
+        $service = Service::query()
+            ->with('features', 'plans')
+            ->find($id);
         if (!$service) {
             return apiResponse(false, 404, __('words.Not found'));
         }
 
         return apiResponse(true, 200, $service);
+    }
+
+    public function setting()
+    {
+        $data = HomeSetting::query()
+            ->select('title', 'meta_description', 'meta_keywords')
+            ->first();
+
+        return apiResponse(true, 200, $data);
     }
 
 }
