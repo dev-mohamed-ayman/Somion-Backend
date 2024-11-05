@@ -13,7 +13,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::select('id', 'name')->get();
+        $roles = Role::select('id', 'name')->with(['permissions:id,name'])->get();
         return apiResponse(true, 200, $roles);
     }
 
