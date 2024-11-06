@@ -9,6 +9,8 @@ Route::post('auth/login', [\App\Http\Controllers\Admin\Auth\AuthController::clas
 Route::middleware('auth:sanctum')->group(function () {
     // Profile
     Route::get('auth/profile', [\App\Http\Controllers\Admin\Auth\AuthController::class, 'profile']);
+    Route::post('auth/profile', [\App\Http\Controllers\Admin\Auth\AuthController::class, 'updateProfile']);
+
     // Logout
     Route::post('auth/logout', [\App\Http\Controllers\Admin\Auth\AuthController::class, 'logout']);
 

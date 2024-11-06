@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auth\LoginRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Http\Requests\Admin\User\UpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
@@ -32,6 +35,26 @@ class AuthController extends Controller
             'user' => $user,
             'permissions' => $permissions,
         ]);
+    }
+
+    public function updateProfile(UpdateUserRequest $request)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return apiResponse(false, 404, __('words.Not found'));
+        }
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->username = $request->username;
+        if ($request->hasFile('image')) {
+            deleteFile($user->image);
+            $user->image = uploadFile('users', $request->file('image'));
+        }
+        if ($request->password)
+            $user->password = bcrypt($request->password);
+
+        $user->save();
     }
 
     public function logout()
